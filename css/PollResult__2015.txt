@@ -1,0 +1,1 @@
+townhouses=3:apartments=4:Studio=1:1-bedroom=1:2-bedrooms=4:3-bedrooms=2:4-bedrooms=2

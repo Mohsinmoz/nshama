@@ -1,0 +1,341 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="Nshama.Web.Main" %>
+
+<!DOCTYPE html>
+<script runat="server">
+
+    protected void Button2_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            if (Page.Request.Form["firstanswer"].ToString() != null || Page.Request.Form["secq_answer"].ToString() != null)
+            {
+                string firstanswer = Page.Request.Form["firstanswer"].ToString();
+                string secq_answer = Page.Request.Form["secq_answer"].ToString();
+                if (string.IsNullOrWhiteSpace(firstanswer) || String.IsNullOrWhiteSpace(secq_answer)) return;
+                string[] Poll = null;            
+                using (System.IO.StreamReader sr = new System.IO.StreamReader(Server.MapPath("~/css/PollResult__2015.txt")))
+                {
+                    
+                    while (!sr.EndOfStream)
+                    {
+                        string ImportUrls = sr.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(ImportUrls))
+                        {
+                            Poll = ImportUrls.Split(':');
+                        }
+
+                    }
+                }
+                if (firstanswer == "0")
+                {
+                    int count = Convert.ToInt32(Poll[0].Replace("townhouses=", "").Trim())+1;
+                    Poll[0] = "townhouses=" + count;
+                    
+                }
+                if (firstanswer == "1")
+                {
+                    int count = Convert.ToInt32(Poll[1].Replace("apartments=", "").Trim()) + 1;
+                    Poll[1] = "apartments=" + count;
+
+                }
+                if (secq_answer == "4")
+                {
+                    int count = Convert.ToInt32(Poll[2].Replace("Studio=", "").Trim()) + 1;
+                    Poll[2] = "Studio=" + count;
+
+                }
+                if (secq_answer == "5")
+                {
+                    int count = Convert.ToInt32(Poll[3].Replace("1-bedroom=", "").Trim()) + 1;
+                    Poll[3] = "1-bedroom=" + count;
+
+                }
+                if (secq_answer == "6")
+                {
+                    int count = Convert.ToInt32(Poll[4].Replace("2-bedrooms=", "").Trim()) + 1;
+                    Poll[4] = "2-bedrooms=" + count;
+
+                }
+                if (secq_answer == "2")
+                {
+                    int count = Convert.ToInt32(Poll[5].Replace("3-bedrooms=", "").Trim()) + 1;
+                    Poll[5] = "3-bedrooms=" + count;
+
+                }
+                if (secq_answer == "3")
+                {
+                    int count = Convert.ToInt32(Poll[6].Replace("4-bedrooms=", "").Trim()) + 1;
+                    Poll[6] = "4-bedrooms=" + count;
+
+                }
+                string WriteText = Poll[0] + ":" + Poll[1] + ":" + Poll[2] + ":" + Poll[3] + ":" + Poll[4] + ":" + Poll[5] + ":" + Poll[6];
+
+                try
+                {
+                    if (!System.IO.File.Exists(Server.MapPath("~/css/PollResult__2015.txt")))
+                    {
+                        // Create a file to write to. 
+                        System.IO.StreamWriter sw = System.IO.File.CreateText(Server.MapPath("~/css/PollResult__2015.txt"));
+
+                    }
+                }
+                catch { }
+
+                try
+                {
+                    using (System.IO.StreamWriter sw = System.IO.File.CreateText(Server.MapPath("~/css/PollResult__2015.txt")))
+                    {
+
+                        sw.WriteLine(WriteText);
+                        sw.Close();
+
+                    }
+                }
+                catch { }
+                //Response.Write(firstanswer + "  " + secq_answer);
+            }
+        }
+        catch { }
+        
+    }
+    
+</script>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" id="viewport" content="width=device-width,initial-scale=0.7,user-scalable=no">
+    <title>nshama
+    </title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/flexslider.css"/>
+    <link rel="stylesheet" href="/css/main.css"/>
+    <link href="/css/Style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/intlTelInput.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.cookie.js"></script>
+    
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-57350756-1', 'auto');
+        ga('send', 'pageview');
+
+
+
+function ShowHideDivOnButtonClick() {
+            $('#secopt0').toggle("slow");
+            return true;
+        }
+
+$(document).ready(function() {
+		$('#secopt').hide(); 
+		$('#firstopt').hide();
+   $('input[type="radio"]').click(function() {
+       if($(this).attr('id') == 'firstqst_firstopt') {
+            $('#secopt').hide(); 
+			$('#firstopt').show();           
+       }
+
+       if($(this).attr('id') == 'firstqst_secopt') {
+	   		$('#firstopt').hide();
+            $('#secopt').show();   
+       }
+   });
+   
+   jQuery('#Button2').live('click', function(event) {   
+         jQuery('#divcontrol').hide('show');
+    });
+});		
+    </script>
+
+</head>
+<body>
+<!--<script type="text/javascript" src="https://chat3.sightmaxondemand.com/Nshama/SightMaxAgentInterface/sightmax.smjs?accountID=79&siteID=92&queueID=109&jquery=True&json=True&v=5&skipsurvey=false"></script>-->
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="SMSurvey" runat="server">
+    
+    </asp:ScriptManager>
+    <div class="main-wrapper">
+        <div class="nav">
+            <div class="main-logo">
+                <a href="/">
+                    <img src="/img/generic/logo.png" alt="" />
+                </a>
+            </div>
+            <div class="menu-btn">
+                <img src="/img/generic/menu-btn.png" alt="" />
+            </div>
+            <div>
+                  <a class="lang-swt" href="<%=HttpContext.Current.Request.Url.ToString().Contains("/en")?HttpContext.Current.Request.Url.ToString().Replace("/en", "/ar").Replace("/default.aspx","/") : HttpContext.Current.Request.Url.ToString().Split('/')[0]+"/ar"+HttpContext.Current.Request.Url.AbsolutePath.Remove(0, VirtualPathUtility.ToAbsolute("~/").Length - 1) %>">
+                    AR
+                      </a>
+                </div>
+			
+   
+   
+            <div class="register-btn" style="width:24%;">
+                <a href="/register">register your interest
+                </a>
+			 </div>	
+				
+				
+    
+           
+            <div class="site-nav">
+                <ul>
+                    <li>
+                        <a href="/about-us">about us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/communities">greener communities
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/media-center">media centre
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/what-we-do">what we do
+                        </a>
+                    </li>
+                    <li>
+                        projects                        
+                        <div class="subnav">
+                         <div class="subnav-inner">
+                          <ul>
+                           <li>
+                            <a href="/town-square">
+                             town square
+                            </a>
+                           </li>
+                           <!--
+                           <li>
+                            <a href="/town-square/zahra-townhouses">
+                             Zahra TownHouses
+                            </a>
+                           </li>
+                           <li>
+                            <a href="/town-square/zahra-apartments">
+                             Zahra Apartments
+                            </a>
+                           </li>
+                           <li>
+                            <a href="/town-square/hayat-townhouses">
+                             Hayat TownHouses
+                            </a>
+                           </li>                           
+                           <li>
+                            <a href="/town-square/safi-apartments">
+                             Safi Apartments
+                            </a>
+                           </li>
+						   <li>
+                            <a href="/town-square/construction-progress">
+                             Construction Progress
+                            </a>
+                           </li>
+                           -->
+                          </ul>
+                         </div>
+                        </div>
+                        
+                    </li>
+                    <li>
+                        <a href="/contact-us">contact us
+                        </a>
+                    </li>
+					<li>
+                        <a href="/career">Careers
+                        </a>
+                    </li>
+                </ul>
+				 
+            </div>
+        </div>
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+    </div>
+	
+	  <div id="divcontrol" class="poll">
+				
+				  <a href="#" onclick="ShowHideDivOnButtonClick();" style="border: none;color: #1a1a1a; float: none; padding: 0px; text-transform: uppercase;"><img alt="" src="img/hand.png" style="width: 12%;vertical-align: middle;"> <b style="padding-left: 18px;font-size:14px;">TOWN SQUARE POLL</b></a><br>
+					
+				
+						<div id="secopt0" style="height:90px; margin-top:5px;">
+							<b>What are you most interested in?</b><br><br>
+							<input type="radio" name="secq_answer" id="secqst_forthopt5" value="5"style="margin:-2px 5px 0px 0px;">1 bedroom 
+							<input type="radio" name="secq_answer" id="secqst_forthopt6" value="6"style="margin:-2px 5px 0px 10px;">2 bedroom 
+							<input type="radio" name="secq_answer" id="secqst_forthopt7" value="2"style="margin:-2px 5px 0px 10px;">3 bedroom
+							<br><br>
+							<a href="#" ID="Button2" runat="server" Text="SUBMIT" OnClientClick="Button2_Click"  style="background: #1a1a1a; padding:5px; border:2px inset; border-radius:5px; color:#fff;float:right; margin-right:10px;">SUBMIT</a>
+							
+						</div>
+						
+				
+				</div>
+	
+    <div class="footer">
+        <div class="footer-left">
+            <ul>
+                <li>
+                    <a href="/about-us">about us
+                    </a>
+                </li>
+                <li>
+                    <a href="/town-square">projects
+                    </a>
+                </li>
+                <li>
+                    <a href="/what-we-do">what we do
+                    </a>
+                </li>
+                <li>
+                    <a href="/media-center">media centre
+                    </a>
+                </li>
+                <li>
+                    <a href="/communities">greener communities
+                    </a>
+                </li>
+                <li>
+                    <a href="/contact-us">contact us
+                    </a>
+                </li>
+            </ul>
+            <div class="priv-copy">
+                <a href="/privacy-policy">Privacy Policy
+                </a>
+                <a href="/terms-and-conditions">Terms &amp; Conditions
+                </a>
+                <p>
+                    Copyright © <%=DateTime.Now.Year %>. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+        <div class="footer-logo">
+            <img src="/img/generic/footer-logo.png" alt="" />
+        </div>
+    </div>
+
+    <script src="/js/jquery.bxslider.min.js"></script>
+	<script src="/js/jquery.flexslider.js"></script>
+    <script src="/js/default.js"></script>
+    <script src="/js/intlTelInput.js"></script>
+    </form>
+     <script>
+         $("#mobile-number").intlTelInput();
+</script>
+</body>
+</html>

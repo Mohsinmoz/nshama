@@ -1,0 +1,96 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Main.master.cs" Inherits="Nshama.Web.Main" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" id="viewport" content="width=device-width,initial-scale=0.7,user-scalable=no">
+    <title>nshama
+    </title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/flexslider.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link href="/css/Style.css" rel="stylesheet" />
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-57350756-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+</head>
+<body ontouchstart="">
+    <form id="form1" runat="server">
+    <div class="main-wrapper">
+        <div class="nav tw-sq">
+            <div class="main-logo">
+                <a href="/">
+                    <img src="/img/generic/logo.png" alt="" />
+                </a>
+            </div>
+            
+        </div>
+
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+
+    </div>
+    <div class="footer">
+        <div class="footer-left">
+            <ul>
+                <li>
+                    <a href="/about-us">about us
+                    </a>
+                </li>
+                <li>
+                    <a href="/town-square">projects
+                    </a>
+                </li>
+                <li>
+                    <a href="/what-we-do">what we do
+                    </a>
+                </li>
+                <li>
+                    <a href="/media-center">media centre
+                    </a>
+                </li>
+                <li>
+                    <a href="/communities">greener communities
+                    </a>
+                </li>
+                <li>
+                    <a href="/contact-us">contact us
+                    </a>
+                </li>
+            </ul>
+            <div class="priv-copy">
+                <a href="/privacy-policy">Privacy Policy
+                </a>
+                <a href="/terms-and-conditions">Terms &amp; Conditions
+                </a>
+                <p>
+                    Copyright © <%=DateTime.Now.Year %>. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+        <div class="footer-logo">
+            <img src="/img/generic/footer-logo.png" alt="" />
+        </div>
+    </div>
+  
+    <script src="/js/jquery.flexslider.js"></script>
+    <script src="/js/default.js"></script>
+     </form>
+</body>
+</html>
